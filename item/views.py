@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_list_or_404, render, get_object_or_404, redirect
 
 from .forms import NewItemForm
 from .models import Item
@@ -38,5 +38,17 @@ def new(request):
         'form': form,
         'title': 'Yeni Kitap'
     })
+    
+    
+    
+    
+@login_required
+def delete(request, pk):
+    item = get_list_or_404(Item, pk=pk, created_by=request.user)
+    item.delete()
+    
+    return redirect('dashboard:index')
+    
+    
     
     
